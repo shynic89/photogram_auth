@@ -7,6 +7,7 @@ end
 def show
 @id = params[:id]
 @user = User.find(@id)
+    @photos = current_user.photos
 end
     
 end
