@@ -2,12 +2,13 @@ class PhotosController < ApplicationController
   
   def favorites 
     @photos = current_user.liked_photos
+
   render ("photos/favorites.html.erb")
   end
   
   def index
     @photos = Photo.all
-
+    @users = User.all
     render("photos/index.html.erb")
   end
 
