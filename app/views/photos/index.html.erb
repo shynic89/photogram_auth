@@ -2,11 +2,13 @@
   <div class="col-md-8 col-md-offset-2">
     <div class="panel panel-default">
       
-<div class="page-header">
-  <h1>
-    Photos
-    <a href="/photos/new" class="btn btn-lg btn-success">New Photo</a>
-  </h1>
+    <div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <a href="/photos/new" class="btn btn-default btn-block">
+            <i class="fa fa-plus"></i>
+      </a>
+    <hr>
+  </div>
 </div>
 
 <div class="row">
@@ -23,9 +25,20 @@
        <div class="panel-body">
         <%= photo.caption %>
         <img src="<%= photo.image %>" class="img-responsive">
-        
-                <p>
-            <form action="/create_like" method="post">
+            
+           
+            <% photo.likes.each do |like| %>
+            
+            <p>
+             <% if photo.likes.pluck(:user_id).include? current_user.id %>
+             
+             <a href="/delete_like/<%= like.id %>" class="btn btn-link">
+             <i class="fa fa-heart"></i>
+             </a>
+  
+            
+             <% else %>
+             <form action="/create_like" method="post">
               <!-- Hidden input for authenticity token to protect from forgery -->
               <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
               
@@ -34,17 +47,20 @@
               <input type="hidden" name="user_id" value="<%= current_user.id %>">
 
               <button class="btn btn-link">
-                <i class="fa fa-heart-o"></i>
+              <i class="fa fa-heart-o"></i>
               </button>
-              
-              <% photo.likes.each do |like| %>
-              <%= User.find(like.user_id).username %>
+
+              </form>
+
               <% end %>
-              likes
-              this
-            </form>
-        </p>
-        
+              
+             <%= User.where(:id => like.user_id).pluck(:username).to_sentence %>
+             likes
+             this
+             </p>
+              <% end %>
+              
+
         <ul class="media-list">
             <% photo.comments.each do |comment| %>
             <li class="media">
