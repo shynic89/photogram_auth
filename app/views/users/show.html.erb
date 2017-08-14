@@ -1,0 +1,12 @@
+<h1><%= @user.username %></h1>
+
+    <dl class="dl-horizontal">
+      <% @user.photos.each do |photo| %>
+      <dt>Caption</dt>
+      <dd><%= photo.caption %></dd>
+
+      <dt>Image</dt>
+      <dd><img src="<%= photo.image %>" class="img-responsive"></dd>
+      <% end %>
+
+    </dl>
