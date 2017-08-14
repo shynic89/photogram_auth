@@ -6,7 +6,8 @@
       <dd><%= photo.caption %></dd>
 
       <dt>Image</dt>
-      <dd><image src="<%= photo.image %>" ></image></dd>
+      <dd>img[src*='#{<%= photo.image %>}']</dd>
+      <!--<dd><image src="" class="img-responsive" ></image></dd>-->
       <% end %>
 
     </dl>
