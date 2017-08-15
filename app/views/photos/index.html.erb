@@ -13,6 +13,7 @@
     <div class="panel panel-default">
       
       <% @photos.each do |photo| %>
+      
         <div class="panel-heading">
         <h3 class="panel-title">
         <a href="/users/<%= photo.user_id %>"><%= @users.find(photo.user_id).username %></a>
@@ -21,21 +22,12 @@
         </div>
       
        <div class="panel-body">
-        <%= photo.caption %>
+        <a href="/photos/<%= photo.id %>">
         <img src="<%= photo.image %>" class="img-responsive">
-            
+        </a>    
            
-            <% photo.likes.each do |like| %>
             
             
-             <% if photo.likes.pluck(:user_id).include? current_user.id %>
-             <p>
-             <a href="/delete_like/<%= like.id %>" class="btn btn-link">
-             <i class="fa fa-heart"></i>
-             </a>
-             </p>
-            
-             <% else %>
              <p>
              <form action="/create_like" method="post">
               <!-- Hidden input for authenticity token to protect from forgery -->
@@ -50,14 +42,19 @@
               </button>
 
               </form>
-              
+            <% photo.likes.each do |like| %>
              <%= User.where(:id => like.user_id).pluck(:username).to_sentence %>
              likes
              this
              </p>
-             <% end %>
-              <% end %>
-              
+            
+             <p>
+             <a href="/delete_like/<%= like.id %>" class="btn btn-link">
+             <i class="fa fa-heart"></i>
+             </a>
+             </p>
+
+           <% end %>
 
         <ul class="media-list">
             <% photo.comments.each do |comment| %>
@@ -101,7 +98,6 @@
                       </button>
                     </span>
                   </div><!-- /input-group -->
-                </div>
               </form>
             </div>
           </li>
@@ -117,5 +113,5 @@
       <% end %>
       
       </div>
-  </div>
+    </div>
   </div>
