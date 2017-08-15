@@ -1,7 +1,4 @@
-<div class="row">
-  <div class="col-md-8 col-md-offset-2">
-    <div class="panel panel-default">
-      
+
     <div class="row">
   <div class="col-md-8 col-md-offset-2">
     <a href="/photos/new" class="btn btn-default btn-block">
@@ -12,8 +9,9 @@
 </div>
 
 <div class="row">
-  <div class="col-md-12">
-
+  <div class="col-md-8 col-md-offset-2">
+    <div class="panel panel-default">
+      
       <% @photos.each do |photo| %>
         <div class="panel-heading">
         <h3 class="panel-title">
@@ -29,15 +27,16 @@
            
             <% photo.likes.each do |like| %>
             
-            <p>
+            
              <% if photo.likes.pluck(:user_id).include? current_user.id %>
-             
+             <p>
              <a href="/delete_like/<%= like.id %>" class="btn btn-link">
              <i class="fa fa-heart"></i>
              </a>
-  
+             </p>
             
              <% else %>
+             <p>
              <form action="/create_like" method="post">
               <!-- Hidden input for authenticity token to protect from forgery -->
               <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
@@ -51,13 +50,12 @@
               </button>
 
               </form>
-
-              <% end %>
               
              <%= User.where(:id => like.user_id).pluck(:username).to_sentence %>
              likes
              this
              </p>
+             <% end %>
               <% end %>
               
 
@@ -120,6 +118,4 @@
       
       </div>
   </div>
-  
-</div>
-</div>
+  </div>
